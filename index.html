@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#09030A">
+  <meta name="description" content="A romantic surprise for Ilma, my heart, my love.">
+  <title>Ilma — Forever In My Heart ❤️</title>
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Background Canvas for floating hearts & sparkling dust -->
+  <canvas id="ambientCanvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Atmospheric Glow Overlays -->
+  <div class="screen-glow" id="screenGlow" aria-hidden="true"></div>
+  <div class="vignette-overlay" aria-hidden="true"></div>
+
+  <!-- Particle Container for interactive bursts -->
+  <div id="particleContainer" class="particle-container" aria-hidden="true"></div>
+
+  <!-- Main Experience Wrapper -->
+  <main class="experience-container" id="mainContainer">
+
+    <!-- INITIAL SCREEN (State 1) -->
+    <section class="intro-section" id="introSection" aria-live="polite">
+      <!-- Romantic Eyebrow Heading -->
+      <p class="romantic-eyebrow">
+        <span class="sparkle-icon">✨</span>
+        <span>A Little Surprise For You ❤️</span>
+        <span class="sparkle-icon">✨</span>
+      </p>
+
+      <!-- Main Name -->
+      <h1 class="lover-name" id="loverName">Ilma</h1>
+
+      <!-- Subtitle -->
+      <p class="lover-subtitle">My Special Girl</p>
+
+      <!-- Central Heart Interaction Button -->
+      <div class="heart-stage">
+        <!-- Ambient pulsating aura rings -->
+        <div class="heart-aura" aria-hidden="true"></div>
+        <div class="heart-aura aura-delayed" aria-hidden="true"></div>
+
+        <button 
+          type="button" 
+          id="heartBtn" 
+          class="heart-button" 
+          aria-label="Click to open my heart for Ilma"
+          title="Click to open my heart for Ilma"
+        >
+          <!-- SVG Heart with two artistic splitting halves -->
+          <svg class="heart-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Left half gradient -->
+              <linearGradient id="heartGradLeft" x1="15%" y1="0%" x2="85%" y2="100%">
+                <stop offset="0%" stop-color="#FFA4CA" />
+                <stop offset="25%" stop-color="#FF4071" />
+                <stop offset="65%" stop-color="#FF174F" />
+                <stop offset="100%" stop-color="#6E021A" />
+              </linearGradient>
+
+              <!-- Right half gradient -->
+              <linearGradient id="heartGradRight" x1="85%" y1="0%" x2="15%" y2="100%">
+                <stop offset="0%" stop-color="#FFBDD8" />
+                <stop offset="30%" stop-color="#FF2F66" />
+                <stop offset="70%" stop-color="#E60039" />
+                <stop offset="100%" stop-color="#550013" />
+              </linearGradient>
+
+              <!-- Core inner glow -->
+              <radialGradient id="heartCoreGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+                <stop offset="35%" stop-color="#FFB3D1" stop-opacity="0.8" />
+                <stop offset="70%" stop-color="#FF174F" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="#FF174F" stop-opacity="0" />
+              </radialGradient>
+
+              <!-- Specular Gloss Highlight -->
+              <linearGradient id="heartGloss" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.6" />
+                <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.1" />
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
+              </linearGradient>
+
+              <!-- Glow Drop Filter -->
+              <filter id="heartGlowFilter" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Inner radiant core -->
+            <circle class="heart-core-light" cx="100" cy="95" r="32" fill="url(#heartCoreGlow)" />
+
+            <!-- Left Heart Half -->
+            <g class="heart-half-group heart-half-left" id="halfLeft">
+              <path 
+                class="heart-half-shape" 
+                d="M 100,52 C 100,32 82,18 60,18 C 36,18 18,36 18,62 C 18,97 52,133 100,172 L 100,52 Z" 
+                fill="url(#heartGradLeft)" 
+              />
+              <!-- Gloss curve for Left Half -->
+              <path 
+                class="heart-half-gloss" 
+                d="M 98,54 C 98,38 84,24 62,24 C 42,24 28,38 26,60 C 25,66 28,68 33,65 C 44,58 60,54 90,53 Z" 
+                fill="url(#heartGloss)" 
+              />
+            </g>
+
+            <!-- Right Heart Half -->
+            <g class="heart-half-group heart-half-right" id="halfRight">
+              <path 
+                class="heart-half-shape" 
+                d="M 100,52 C 100,32 118,18 140,18 C 164,18 182,36 182,62 C 182,97 148,133 100,172 L 100,52 Z" 
+                fill="url(#heartGradRight)" 
+              />
+              <!-- Gloss curve for Right Half -->
+              <path 
+                class="heart-half-gloss" 
+                d="M 102,54 C 102,38 116,24 138,24 C 158,24 172,38 174,60 C 175,66 172,68 167,65 C 156,58 140,54 110,53 Z" 
+                fill="url(#heartGloss)" 
+              />
+            </g>
+
+            <!-- Center Light Seam -->
+            <line class="heart-seam" x1="100" y1="52" x2="100" y2="172" stroke="#FFF2F7" stroke-width="1.2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Prompts Below Heart -->
+      <div class="intro-prompts">
+        <p class="click-prompt" id="clickPrompt">
+          <span class="prompt-text">Click My Heart ❤️</span>
+        </p>
+        <p class="sweet-tagline" id="sweetTagline">
+          My Wife, Mu Dear ❤️
+        </p>
+      </div>
+    </section>
+
+    <!-- FINAL LOVE MESSAGE CARD (State 2 - Revealed upon Heart Click) -->
+    <section class="message-section" id="messageSection" aria-live="assertive" hidden>
+      <div class="love-card" id="loveCard">
+        <!-- Romantic Card Decorative Border Ornaments -->
+        <div class="card-corner corner-top-left" aria-hidden="true">❦</div>
+        <div class="card-corner corner-top-right" aria-hidden="true">❦</div>
+        <div class="card-corner corner-bottom-left" aria-hidden="true">❦</div>
+        <div class="card-corner corner-bottom-right" aria-hidden="true">❦</div>
+
+        <!-- Glowing Heart Crest -->
+        <div class="card-crest" aria-hidden="true">
+          <span class="crest-sparkle">✨</span>
+          <span class="crest-heart">💖</span>
+          <span class="crest-sparkle">✨</span>
+        </div>
+
+        <!-- EXACT LOVE MESSAGE AS REQUESTED -->
+        <div class="message-content">
+          <h2 class="message-title msg-line delay-1">Ilma, My Love ❤️</h2>
+          
+          <p class="message-accent msg-line delay-2">I Love You Always.</p>
+          
+          <p class="message-body msg-line delay-3">
+            You Are Always In My Mind, In My Heart, And In My Life.
+          </p>
+          
+          <p class="message-body msg-line delay-4">
+            No Matter The Distance, No Matter The Time, My Heart Will Always Choose You.
+          </p>
+          
+          <p class="message-body msg-line delay-5">
+            You Are My Special Person, My Happiness, And My Forever Love.
+          </p>
+          
+          <p class="message-signoff msg-line delay-6">Forever Yours ❤️</p>
+        </div>
+
+        <!-- Screenshot-Friendly Action Bar -->
+        <div class="card-actions msg-line delay-7" id="cardActions">
+          <button type="button" class="action-btn save-btn" id="saveCardBtn" title="Save this love card as an image">
+            <span class="action-icon">📸</span>
+            <span class="action-text">Save Love Card</span>
+          </button>
+          
+          <button type="button" class="action-btn replay-btn" id="replayBtn" title="Experience the surprise again">
+            <span class="action-icon">↺</span>
+            <span class="action-text">Replay Magic</span>
+          </button>
+        </div>
+
+        <!-- Subtle Screenshot Guidance Tip -->
+        <p class="screenshot-tip msg-line delay-8">
+          <span>Tip: Press Power + Volume Down on your phone to screenshot this memory forever 💖</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

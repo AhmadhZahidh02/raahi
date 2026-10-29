@@ -1,0 +1,830 @@
+/* ==========================================================================
+   ILMA — MY HEART, MY LOVE ❤️
+   Premium Romantic Surprise Website
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties & Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette */
+  --bg-dark: #09030A;
+  --bg-deep-wine: #220108;
+  --dark-wine: #40000C;
+  --crimson-glow: #A30826;
+  --crimson-bright: #D60A36;
+  --heart-bright: #FF174F;
+  --heart-glow: rgba(255, 23, 79, 0.65);
+  --soft-pink: #FF91C8;
+  --pink-light: #FFB8D9;
+  --pink-blush: #FFE4EE;
+  --gold-warm: #FFE5A3;
+  --text-white: #FFFFFF;
+  --text-muted: rgba(255, 225, 238, 0.85);
+
+  /* Typography */
+  --font-cursive: 'Great Vibes', 'Brush Script MT', 'Apple Chancery', cursive;
+  --font-serif: 'Playfair Display', 'Cinzel', 'Georgia', 'Palatino Linotype', serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Card & Glassmorphism */
+  --card-bg: rgba(26, 3, 11, 0.78);
+  --card-border: rgba(255, 145, 200, 0.32);
+  --card-glow: 0 0 45px rgba(163, 8, 38, 0.45), 0 0 100px rgba(255, 23, 79, 0.2);
+
+  /* Transitions */
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & Base Layout
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  background: radial-gradient(circle at 50% 38%, var(--dark-wine) 0%, var(--bg-deep-wine) 48%, var(--bg-dark) 92%);
+  background-attachment: fixed;
+  color: var(--text-white);
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* --------------------------------------------------------------------------
+   3. Background Atmosphere & Canvas
+   -------------------------------------------------------------------------- */
+.ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Subtle dark vignette around screen edges */
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(5, 1, 6, 0.75) 100%);
+  z-index: 2;
+}
+
+/* Screen glow flash activated on heart click */
+.screen-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 64, 113, 0.45) 0%, rgba(163, 8, 38, 0.2) 50%, transparent 80%);
+  opacity: 0;
+  transition: opacity 0.8s var(--transition-smooth);
+  z-index: 3;
+}
+
+.screen-glow.active {
+  opacity: 1;
+  animation: pulseFlash 2.5s ease-out forwards;
+}
+
+@keyframes pulseFlash {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.25; }
+}
+
+/* Particle Container */
+.particle-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 15;
+}
+
+/* --------------------------------------------------------------------------
+   4. Main Container & Typography
+   -------------------------------------------------------------------------- */
+.experience-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 620px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1.25rem;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   5. Initial Intro Screen
+   -------------------------------------------------------------------------- */
+.intro-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+}
+
+.intro-section.fade-out {
+  opacity: 0;
+  transform: scale(0.92) translateY(-20px);
+  pointer-events: none;
+}
+
+/* Eyebrow Heading */
+.romantic-eyebrow {
+  font-family: var(--font-serif);
+  font-size: clamp(0.9rem, 2.8vw, 1.15rem);
+  color: var(--soft-pink);
+  text-transform: uppercase;
+  letter-spacing: 3.5px;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 15px rgba(255, 145, 200, 0.55);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeInDown 1.2s ease-out;
+}
+
+.sparkle-icon {
+  font-size: 0.9em;
+  animation: twinkle 2s infinite ease-in-out;
+}
+
+/* Main Name "Ilma" */
+.lover-name {
+  font-family: var(--font-cursive);
+  font-size: clamp(3.8rem, 14vw, 6.2rem);
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+  background: linear-gradient(135deg, #FFFFFF 0%, var(--pink-blush) 35%, var(--soft-pink) 70%, var(--heart-bright) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 25px rgba(255, 23, 79, 0.7)) drop-shadow(0 0 50px rgba(163, 8, 38, 0.4));
+  letter-spacing: 1px;
+  animation: floatName 4s infinite ease-in-out;
+}
+
+/* Subtitle */
+.lover-subtitle {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 3.6vw, 1.45rem);
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-top: 0.35rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 12px rgba(255, 145, 200, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   6. Center Heart Button & Stage
+   -------------------------------------------------------------------------- */
+.heart-stage {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0 1.75rem;
+}
+
+/* Ambient Pulsating Halo Rings */
+.heart-aura {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 23, 79, 0.45) 0%, rgba(255, 23, 79, 0.08) 60%, transparent 80%);
+  animation: auraPulse 3s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.heart-aura.aura-delayed {
+  animation-delay: 1.5s;
+  width: 210px;
+  height: 210px;
+  background: radial-gradient(circle, rgba(255, 145, 200, 0.28) 0%, rgba(163, 8, 38, 0.05) 60%, transparent 80%);
+}
+
+/* Accessible Interactive Heart Button */
+.heart-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+  outline: none;
+  transition: transform 0.3s var(--transition-bounce), filter 0.3s ease;
+  animation: gentleHeartbeat 1.8s infinite ease-in-out;
+}
+
+.heart-button:focus-visible {
+  border-radius: 50%;
+  outline: 3px solid var(--soft-pink);
+  outline-offset: 12px;
+  box-shadow: 0 0 30px var(--heart-bright);
+}
+
+.heart-button:hover {
+  transform: scale(1.08);
+}
+
+.heart-button:active {
+  transform: scale(0.96);
+}
+
+/* Fast heartbeat state before splitting */
+.heart-button.rapid-beat {
+  animation: rapidHeartbeat 0.35s infinite ease-in-out !important;
+}
+
+/* The SVG Canvas */
+.heart-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 25px rgba(255, 23, 79, 0.75)) drop-shadow(0 0 45px rgba(163, 8, 38, 0.45));
+}
+
+/* Heart Halves Initial Appearance */
+.heart-half-group {
+  transition: transform 1.2s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 1.2s ease;
+  transform-origin: 100px 100px;
+}
+
+.heart-half-shape {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 0.5px;
+}
+
+.heart-core-light {
+  animation: corePulse 1.8s infinite ease-in-out;
+  transform-origin: 100px 95px;
+}
+
+.heart-seam {
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px #FFF);
+}
+
+/* ==========================================================================
+   Splitting Heart Animation Classes (Emotional & Artistic)
+   ========================================================================== */
+.heart-button.split-active .heart-half-left {
+  animation: splitLeftSmooth 1.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.heart-button.split-active .heart-half-right {
+  animation: splitRightSmooth 1.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+.heart-button.split-active .heart-core-light {
+  animation: coreExplosion 1.4s ease-out forwards;
+}
+
+.heart-button.split-active .heart-seam {
+  animation: seamShine 0.5s ease-out forwards;
+}
+
+@keyframes splitLeftSmooth {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(-14px, -6px) rotate(-6deg) scale(1.05);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-55px, -18px) rotate(-22deg) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-95px, -35px) rotate(-34deg) scale(0.75);
+    opacity: 0;
+  }
+}
+
+@keyframes splitRightSmooth {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translate(14px, -6px) rotate(6deg) scale(1.05);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(55px, -18px) rotate(22deg) scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(95px, -35px) rotate(34deg) scale(0.75);
+    opacity: 0;
+  }
+}
+
+@keyframes coreExplosion {
+  0% {
+    r: 32;
+    opacity: 0.9;
+  }
+  40% {
+    r: 90;
+    opacity: 1;
+  }
+  100% {
+    r: 130;
+    opacity: 0;
+  }
+}
+
+@keyframes seamShine {
+  0% {
+    stroke-width: 1.2;
+    opacity: 0.6;
+  }
+  50% {
+    stroke-width: 4;
+    opacity: 1;
+    stroke: #FFFFFF;
+  }
+  100% {
+    stroke-width: 0;
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Prompts Under Heart
+   -------------------------------------------------------------------------- */
+.intro-prompts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.click-prompt {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 4vw, 1.55rem);
+  font-weight: 600;
+  color: var(--pink-blush);
+  letter-spacing: 1px;
+  text-shadow: 0 0 16px rgba(255, 145, 200, 0.6);
+  position: relative;
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(255, 23, 79, 0.12);
+  border: 1px solid rgba(255, 145, 200, 0.3);
+  animation: promptGlow 2.4s infinite ease-in-out;
+}
+
+.sweet-tagline {
+  font-family: var(--font-cursive);
+  font-size: clamp(1.5rem, 5vw, 2.1rem);
+  color: var(--gold-warm);
+  letter-spacing: 1px;
+  margin-top: 0.2rem;
+  text-shadow: 0 0 16px rgba(255, 229, 163, 0.5);
+  animation: floatSubtle 3.5s infinite ease-in-out;
+}
+
+/* --------------------------------------------------------------------------
+   8. Final Love Message Card
+   -------------------------------------------------------------------------- */
+.message-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  opacity: 0;
+  transform: translateY(35px) scale(0.95);
+  transition: opacity 1.4s var(--transition-smooth), transform 1.4s var(--transition-smooth);
+}
+
+.message-section.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.love-card {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid var(--card-border);
+  border-radius: 28px;
+  padding: clamp(1.8rem, 5vw, 2.75rem) clamp(1.2rem, 4vw, 2rem);
+  text-align: center;
+  box-shadow: var(--card-glow), 0 15px 35px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+/* Subtle glowing border animation */
+.love-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(255, 145, 200, 0.6) 0%, rgba(255, 23, 79, 0.2) 40%, rgba(255, 229, 163, 0.45) 70%, rgba(163, 8, 38, 0.3) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Romantic Card Corner Ornaments */
+.card-corner {
+  position: absolute;
+  font-size: 1.35rem;
+  color: var(--soft-pink);
+  opacity: 0.55;
+  pointer-events: none;
+  text-shadow: 0 0 8px var(--heart-bright);
+}
+
+.corner-top-left { top: 14px; left: 16px; transform: rotate(0deg); }
+.corner-top-right { top: 14px; right: 16px; transform: rotate(90deg); }
+.corner-bottom-left { bottom: 14px; left: 16px; transform: rotate(-90deg); }
+.corner-bottom-right { bottom: 14px; right: 16px; transform: rotate(180deg); }
+
+/* Glowing Heart Crest */
+.card-crest {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.crest-heart {
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  filter: drop-shadow(0 0 15px var(--heart-bright));
+  animation: gentleHeartbeat 2s infinite ease-in-out;
+}
+
+.crest-sparkle {
+  font-size: 1.1rem;
+  color: var(--gold-warm);
+  animation: twinkle 2.2s infinite ease-in-out;
+}
+
+/* Message Content Typography */
+.message-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+/* Staggered Line Reveal */
+.msg-line {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s var(--transition-smooth), transform 0.9s var(--transition-smooth);
+}
+
+.message-section.revealed .msg-line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: 0.25s; }
+.delay-2 { transition-delay: 0.55s; }
+.delay-3 { transition-delay: 0.85s; }
+.delay-4 { transition-delay: 1.15s; }
+.delay-5 { transition-delay: 1.45s; }
+.delay-6 { transition-delay: 1.80s; }
+.delay-7 { transition-delay: 2.15s; }
+.delay-8 { transition-delay: 2.45s; }
+
+/* 1. "Ilma, My Love ❤️" */
+.message-title {
+  font-family: var(--font-cursive);
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1.2;
+  text-shadow: 0 0 20px rgba(255, 23, 79, 0.7), 0 0 40px rgba(255, 145, 200, 0.4);
+}
+
+/* 2. "I Love You Always." */
+.message-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  color: var(--gold-warm);
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 15px rgba(255, 229, 163, 0.5);
+}
+
+/* 3, 4, 5. Main Body Lines */
+.message-body {
+  font-family: var(--font-serif);
+  font-size: clamp(1.02rem, 3.2vw, 1.22rem);
+  line-height: 1.65;
+  color: var(--pink-blush);
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 10px rgba(255, 145, 200, 0.35);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* 6. "Forever Yours ❤️" */
+.message-signoff {
+  font-family: var(--font-cursive);
+  font-size: clamp(2.1rem, 7vw, 3rem);
+  color: var(--soft-pink);
+  margin-top: 0.6rem;
+  text-shadow: 0 0 18px rgba(255, 23, 79, 0.65);
+}
+
+/* --------------------------------------------------------------------------
+   9. Actions & Screenshot Feature
+   -------------------------------------------------------------------------- */
+.card-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.28s var(--transition-smooth);
+  outline: none;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, var(--heart-bright) 0%, var(--crimson-bright) 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 18px rgba(255, 23, 79, 0.45);
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255, 23, 79, 0.65);
+  background: linear-gradient(135deg, #FF3D70 0%, #E60039 100%);
+}
+
+.save-btn:active {
+  transform: translateY(1px);
+}
+
+.save-btn:focus-visible {
+  outline: 2px solid var(--soft-pink);
+  outline-offset: 3px;
+}
+
+.replay-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--pink-blush);
+  border-color: rgba(255, 145, 200, 0.35);
+}
+
+.replay-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
+  border-color: var(--soft-pink);
+  transform: translateY(-2px);
+}
+
+.replay-btn:active {
+  transform: translateY(1px);
+}
+
+.replay-btn:focus-visible {
+  outline: 2px solid var(--soft-pink);
+  outline-offset: 3px;
+}
+
+/* Subtle Screenshot Tip */
+.screenshot-tip {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 1.25rem;
+  line-height: 1.45;
+  padding: 0 0.5rem;
+  opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------------
+   10. Interactive Particles (Bursts)
+   -------------------------------------------------------------------------- */
+.burst-particle {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: particleFly var(--duration, 1.4s) cubic-bezier(0.12, 0.8, 0.33, 1) forwards;
+}
+
+@keyframes particleFly {
+  0% {
+    transform: translate(0, 0) scale(var(--start-scale, 1)) rotate(0deg);
+    opacity: 1;
+  }
+  65% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(var(--end-scale, 0)) rotate(var(--rot, 180deg));
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   11. Core Keyframe Animations
+   -------------------------------------------------------------------------- */
+/* Heartbeat */
+@keyframes gentleHeartbeat {
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.1); }
+  28%  { transform: scale(1.03); }
+  42%  { transform: scale(1.14); }
+  70%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rapidHeartbeat {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.18); }
+  50%  { transform: scale(1.06); }
+  75%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  42% { transform: scale(1.25); opacity: 1; }
+}
+
+@keyframes auraPulse {
+  0%   { transform: scale(0.95); opacity: 0.45; }
+  50%  { transform: scale(1.35); opacity: 0.15; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+
+@keyframes promptGlow {
+  0%, 100% {
+    box-shadow: 0 0 14px rgba(255, 23, 79, 0.25);
+    border-color: rgba(255, 145, 200, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 23, 79, 0.65);
+    border-color: rgba(255, 145, 200, 0.65);
+  }
+}
+
+@keyframes floatName {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes floatSubtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* --------------------------------------------------------------------------
+   12. Mobile & Responsive Refinements
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .experience-container {
+    padding: 1.25rem 1rem;
+  }
+
+  .heart-stage {
+    width: 190px;
+    height: 190px;
+    margin: 0.35rem 0 1.35rem;
+  }
+
+  .heart-button {
+    width: 155px;
+    height: 155px;
+  }
+
+  .love-card {
+    padding: 1.6rem 1.15rem;
+    border-radius: 22px;
+  }
+
+  .message-content {
+    gap: 0.95rem;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .action-btn {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. Reduced Motion Support (Accessibility)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .heart-button {
+    animation: none !important;
+  }
+
+  .heart-aura {
+    display: none !important;
+  }
+
+  .ambient-canvas {
+    opacity: 0.35;
+  }
+
+  .lover-name,
+  .sweet-tagline,
+  .crest-heart {
+    transform: none !important;
+  }
+
+  .message-section.revealed .msg-line {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
